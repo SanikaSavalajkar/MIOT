@@ -1,0 +1,71 @@
+// 1. Program for Interfacing of Temperature Sensor (LM35) with Arduino and display the reading on the serial monitor:
+
+#define sensorPin A0
+void setup() {
+Serial.begin(9600);
+}
+void loop() {
+int reading = analogRead(sensorPin);
+float voltage = reading * (5.0 / 1024.0);
+float temperatureC = voltage * 100;
+Serial.print("Temperature: ");
+Serial.print(temperatureC);
+Serial.print("\xC2\xB0");
+Serial.print("C | ");
+float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
+Serial.print(temperatureF);
+Serial.print("\xC2\xB0");
+Serial.println("F");
+delay(1000);
+}
+
+
+
+// 2.Program for Interface IR Sensor with Arduino and display the information about obstacle object on the serial monitor
+
+int ledPin=13;
+int inputPin=2;
+int val=0;
+void setup()
+{
+pinMode(ledPin,OUTPUT);
+pinMode( inputPin, INPUT);
+Serial.begin(9600);
+}
+void loop()
+{
+val=digitalRead(inputPin);
+if(val==HIGH)
+{
+Serial.print(“Object Absent\n");
+digitalWrite(ledPin,LOW);
+}
+else
+{ Serial.print("Object Present\n");
+digitalWrite(ledPin,HIGH);
+} 
+}
+
+/*3. Program for Interface of Ultrasonic Sensor with Arduino and display the distance of obstacle using the serial monitor
+Ultrasonic Sensor HC-SR04 interfacing with Arduino.*/
+
+const int trigPin = 9;
+const int echoPin = 2;
+long duration;
+int distance;
+void setup() {
+pinMode(trigPin, OUTPUT); 
+pinMode(echoPin, INPUT); 
+Serial.begin(9600); 
+}
+void loop() {
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+duration = pulseIn(echoPin, HIGH);
+distance= duration*0.034/2;
+Serial.print("Distance: ");
+Serial.println(distance);
+}
