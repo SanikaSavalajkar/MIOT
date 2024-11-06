@@ -1,0 +1,81 @@
+/* 1 Code to spin the mini servomotor*/
+
+#include <Servo.h>
+Servo myservo;
+int value;
+double angle;
+void setup()
+{
+Serial.begin(9600);
+myservo.attach(9);
+}
+void loop()
+{
+value = analogRead(A0);
+angle = map(value, 0, 1023, 0, 180);
+Serial.println(angle);
+myservo.write(angle);
+delay(15);
+}
+
+
+
+/* 2 Code to controlling spin the mini servomotor in degree */
+
+#include <Servo.h>
+Servo myservo;
+int pos = 0;
+void setup() {
+myservo.attach(9);
+}
+void loop() {
+for (pos = 0; pos <= 180; pos += 1) { 
+myservo.write(pos);
+delay(15);
+}
+for (pos = 180; pos >= 0; pos -= 1) {
+myservo.write(pos); 
+delay(15);
+}
+}
+
+
+
+/* 3 Code to controlling spin the DC Motor */
+
+#include <Servo.h>
+Servo servoblue;
+void setup()
+{
+servoblue.attach(8); 
+}
+void loop()
+{
+servoblue.write(0);
+delay(3000); 
+servoblue.write(90);
+delay(3000); 
+servoblue.write(180); 
+delay(3000); 
+servoblue.write(20); 
+delay(3000); 
+}
+
+
+
+/*5 Code to controlling MOTOR SPEED CONTROL*/
+
+int motorPin = 9;
+void setup() {
+pinMode(motorPin, OUTPUT);
+Serial.begin(9600);
+while (! Serial);
+Serial.println("Speed 0 to 255");
+}
+void loop() {
+if (Serial.available()) {
+int speed = Serial.parseInt();
+if (speed >= 0 && speed <= 255) {
+analogWrite(motorPin, speed); } 
+}
+}
